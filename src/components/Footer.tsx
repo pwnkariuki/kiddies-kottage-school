@@ -34,16 +34,17 @@ export default function Footer({
           </p>
           <div className="mt-5 flex gap-2">
             {[
-              { Icon: FacebookLogo, href: "#" },
-              { Icon: InstagramLogo, href: "#" },
-              { Icon: YoutubeLogo, href: "#" },
-              { Icon: WhatsappLogo, href: `https://wa.me/${CONTACT.whatsapp.replace("+", "")}` },
-            ].map(({ Icon, href }, i) => (
+              { Icon: FacebookLogo, href: "https://www.facebook.com/kiddieskottageschool", label: "Facebook" },
+              { Icon: InstagramLogo, href: "https://www.instagram.com/kiddieskottageschool", label: "Instagram" },
+              { Icon: YoutubeLogo, href: "https://www.youtube.com/@kiddieskottageschool", label: "YouTube" },
+              { Icon: WhatsappLogo, href: `https://wa.me/${CONTACT.whatsapp.replace("+", "")}`, label: "WhatsApp" },
+            ].map(({ Icon, href, label }) => (
               <a
-                key={i}
+                key={label}
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
+                aria-label={label}
                 className="grid h-9 w-9 place-items-center rounded-lg bg-white/5 text-slate-300 transition hover:bg-kkblue hover:text-white"
               >
                 <Icon className="h-4 w-4" weight="fill" />
@@ -95,9 +96,13 @@ export default function Footer({
             </li>
             <li className="flex gap-2.5">
               <EnvelopeSimple className="mt-0.5 h-4 w-4 shrink-0 text-kkblue" weight="fill" />
-              <a href={`mailto:${CONTACT.email}`} className="hover:text-white">
-                {CONTACT.email}
-              </a>
+              <span className="space-y-0.5">
+                {CONTACT.emails.map((mail) => (
+                  <a key={mail} href={`mailto:${mail}`} className="block break-all hover:text-white">
+                    {mail}
+                  </a>
+                ))}
+              </span>
             </li>
           </ul>
         </div>

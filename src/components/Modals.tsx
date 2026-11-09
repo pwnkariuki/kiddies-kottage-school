@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "sonner";
-import { Calendar, CheckCircle, PaperPlaneTilt, Phone, X } from "@phosphor-icons/react";
-import { ACADEMIC_LEVELS, CONTACT } from "@/data/schoolData";
-import type { InquiryPayload } from "@/data/schoolData";
+import {
+  Calendar,
+  CaretLeft,
+  CaretRight,
+  CheckCircle,
+  PaperPlaneTilt,
+  Phone,
+  X,
+} from "@phosphor-icons/react";
+import { ACADEMIC_LEVELS, CONTACT, GALLERY } from "@/data/schoolData";
+import type { GalleryItem, InquiryPayload } from "@/data/schoolData";
+import { ButtonLoader } from "@/components/CustomLoader";
 
 const STORE_KEY = "kk_inquiries";
+
+const isPhone = (v: string) => /^\+?[0-9\s-]{9,15}$/.test(v.trim()) && v.replace(/\D/g, "").length >= 9;
+const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
 
 function readStore(): InquiryPayload[] {
   try {
@@ -104,11 +116,20 @@ export function InquiryForm({ compact }: { compact?: boolean }) {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.parentName.trim() || !form.phone.trim() || !form.ageGroup) {
-      toast.error("Please add your name, a phone number and the age group.");
+    if (busy) return;
+    if (!form.parentName.trim()) {
+      toast.error("Please add the parent or guardian name.");
       return;
     }
-    if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    if (!form.ageGroup) {
+      toast.error("Please choose an age group / level.");
+      return;
+    }
+    if (!form.phone.trim() || !isPhone(form.phone)) {
+      toast.error("Please enter a valid phone number (at least 9 digits).");
+      return;
+    }
+    if (form.email.trim() && !isEmail(form.email)) {
       toast.error("That email address does not look right.");
       return;
     }
@@ -120,8 +141,8 @@ export function InquiryForm({ compact }: { compact?: boolean }) {
     saveInquiry(payload);
     setTimeout(() => {
       setBusy(false);
-      toast.success("Enquiry received! We will call you back shortly.", {
-        description: `${payload.parentName} & ${payload.childName || "your child"}`,
+      toast.success("Enquiry received and saved to admissions registry.", {
+        description: `Our admissions desk will call you at ${payload.phone} within 24 hours.`,
       });
       setForm({
         parentName: "",
@@ -208,7 +229,7 @@ export function InquiryForm({ compact }: { compact?: boolean }) {
         className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kkyellow px-5 py-3 text-sm font-extrabold text-kknavy shadow-sm shadow-kkyellow/30 transition hover:bg-kkyellow-dark hover:text-white active:scale-[0.98] disabled:opacity-60"
       >
         {busy ? (
-          "Sending..."
+          <ButtonLoader label="Sending..." />
         ) : (
           <>
             <PaperPlaneTilt className="h-4 w-4" weight="fill" />
@@ -252,32 +273,42 @@ export function VisitModal({
   open: boolean;
   onClose: () => void;
 }) {
-  const [name, setName] = useState("");
+    const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
-
+  const [busy, setBusy] = useState(false);
+  
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim()) {
-      toast.error("Please add your name and a phone number.");
+    if (busy) return;
+    if (!name.trim()) {
+      toast.error("Please add your name.");
       return;
     }
-    saveInquiry({
-      parentName: name,
-      childName: "Campus visit",
-      ageGroup: date || "Flexible",
-      phone,
-      email: "",
-      message: "Requested a campus tour / schedule visit.",
-      createdAt: new Date().toISOString(),
-    });
-    toast.success("Visit requested! We will confirm your tour slot.", {
-      description: "Our admissions team will call you back.",
-    });
-    setName("");
-    setPhone("");
-    setDate("");
-    onClose();
+    if (!phone.trim() || !isPhone(phone)) {
+      toast.error("Please enter a valid phone number (at least 9 digits).");
+      return;
+    }
+    setBusy(true);
+    setTimeout(() => {
+      saveInquiry({
+        parentName: name,
+        childName: "Campus visit",
+        ageGroup: date || "Flexible",
+        phone,
+        email: "",
+        message: "Requested a campus tour / schedule visit.",
+        createdAt: new Date().toISOString(),
+      });
+      setBusy(false);
+      toast.success("Visit requested and saved to admissions registry.", {
+        description: "Our team will call you back to confirm your tour slot.",
+      });
+      setName("");
+      setPhone("");
+      setDate("");
+      onClose();
+    }, 700);
   };
 
   return (
@@ -329,10 +360,17 @@ export function VisitModal({
         </div>
         <button
           type="submit"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kkyellow px-5 py-3 text-sm font-extrabold text-kknavy shadow-sm shadow-kkyellow/30 transition hover:bg-kkyellow-dark hover:text-white active:scale-[0.98]"
+          disabled={busy}
+          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kkyellow px-5 py-3 text-sm font-extrabold text-kknavy shadow-sm shadow-kkyellow/30 transition hover:bg-kkyellow-dark hover:text-white active:scale-[0.98] disabled:opacity-60"
         >
-          <Calendar className="h-4 w-4" weight="fill" />
-          Request My Visit
+          {busy ? (
+            <ButtonLoader label="Booking..." />
+          ) : (
+            <>
+              <Calendar className="h-4 w-4" weight="fill" />
+              Request My Visit
+            </>
+          )}
         </button>
         <a
           href={`tel:${CONTACT.tel[0]}`}
@@ -343,5 +381,101 @@ export function VisitModal({
         </a>
       </form>
     </ModalShell>
+  );
+}
+
+export function GalleryLightbox({
+  index,
+  onClose,
+  onIndexChange,
+  items = GALLERY,
+}: {
+  index: number | null;
+  onClose: () => void;
+  onIndexChange: (i: number) => void;
+  items?: GalleryItem[];
+}) {
+  const open = index !== null;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      const i = index as number;
+      if (e.key === "ArrowRight") onIndexChange((i + 1) % items.length);
+      if (e.key === "ArrowLeft") onIndexChange((i - 1 + items.length) % items.length);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open, index, items.length, onClose, onIndexChange]);
+
+  const active = open ? items[index as number] : null;
+
+  return (
+    <AnimatePresence>
+      {open && active && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-kknavy/90 p-4 backdrop-blur-sm"
+          onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button
+            onClick={onClose}
+            className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+            aria-label="Close gallery"
+          >
+            <X className="h-6 w-6" weight="bold" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onIndexChange(((index as number) - 1 + items.length) % items.length);
+            }}
+            className="absolute left-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:left-6"
+            aria-label="Previous image"
+          >
+            <CaretLeft className="h-6 w-6" weight="bold" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onIndexChange(((index as number) + 1) % items.length);
+            }}
+            className="absolute right-3 top-1/2 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-white transition hover:bg-white/20 sm:right-6"
+            aria-label="Next image"
+          >
+            <CaretRight className="h-6 w-6" weight="bold" />
+          </button>
+          <motion.figure
+            key={active.id}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.25 }}
+            className="max-h-[85vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={active.src}
+              alt={active.caption}
+              className="max-h-[75vh] w-full object-contain bg-slate-900"
+            />
+            <figcaption className="flex items-center justify-between gap-3 px-5 py-3">
+              <span className="text-sm font-bold text-kknavy">{active.caption}</span>
+              <span className="text-xs font-semibold text-slate-500">
+                {(index as number) + 1} / {items.length}
+              </span>
+            </figcaption>
+          </motion.figure>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

@@ -128,6 +128,8 @@ export const CONTACT = {
   tel: ["+254714502996", "+254712427621"],
   whatsapp: "+254714502996",
   email: "info@kiddieskottageschool.com",
+  altEmail: "kiddieskottageschool@gmail.com",
+  emails: ["info@kiddieskottageschool.com", "kiddieskottageschool@gmail.com"],
   address: "Utawala-Githunguri Road",
   landmarks: "Near SDA Church, opposite Ottomart Supermarket",
   city: "Nairobi, Kenya",

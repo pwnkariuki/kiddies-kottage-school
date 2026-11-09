@@ -38,7 +38,7 @@ import {
   PageHead,
   Reveal,
 } from "@/components/BrandIcon";
-import { InquiryForm } from "@/components/Modals";
+import { InquiryForm, GalleryLightbox } from "@/components/Modals";
 import type { PageId } from "@/data/schoolData";
 
 export function AboutView({
@@ -156,7 +156,6 @@ export function AboutView({
     </div>
   );
 }
-
 export function AcademicsView({
   onOpenAdmissions,
 }: {
@@ -317,6 +316,7 @@ export function StudentLifeView({
 }: {
   onOpenAdmissions: () => void;
 }) {
+  const [lightbox, setLightbox] = useState<number | null>(null);
   return (
     <div>
       <PageHead
@@ -421,7 +421,45 @@ export function StudentLifeView({
           ))}
         </div>
       </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <Eyebrow>Life at Kottage</Eyebrow>
+          <h2 className="mt-4 font-display text-3xl font-extrabold text-kknavy">
+            Moments from our days
+          </h2>
+          <p className="mt-3 text-slate-600">Tap any photo to view it in full size.</p>
+        </Reveal>
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {GALLERY.map((g, i) => (
+            <Reveal key={g.id} delay={(i % 4) * 0.05}>
+              <button
+                type="button"
+                onClick={() => setLightbox(i)}
+                className="group relative block w-full overflow-hidden rounded-2xl"
+                aria-label={`View photo: ${g.caption}`}
+              >
+                <img
+                  src={g.src}
+                  alt={g.caption}
+                  className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+                />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-kknavy/85 to-transparent p-2.5 text-left text-xs font-bold text-white opacity-0 transition group-hover:opacity-100">
+                  {g.caption}
+                </span>
+              </button>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       <Cta onOpenAdmissions={onOpenAdmissions} />
+      <GalleryLightbox
+        index={lightbox}
+        onClose={() => setLightbox(null)}
+        onIndexChange={setLightbox}
+        items={GALLERY}
+      />
     </div>
   );
 }

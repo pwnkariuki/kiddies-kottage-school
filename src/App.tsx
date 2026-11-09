@@ -27,6 +27,7 @@ import {
   VisitModal,
 } from "@/components/Modals";
 import { Eyebrow, PageHead, Reveal } from "@/components/BrandIcon";
+import { FullPageLoader } from "@/components/CustomLoader";
 import {
   ADMISSION_STEPS,
   AGE_CRITERIA,
@@ -256,8 +257,8 @@ function ContactView() {
     {
       Icon: EnvelopeSimple,
       label: "Email us",
-      lines: [CONTACT.email],
-      hrefs: [`mailto:${CONTACT.email}`],
+      lines: CONTACT.emails,
+      hrefs: CONTACT.emails.map((m) => `mailto:${m}`),
     },
     {
       Icon: Clock,
@@ -349,6 +350,12 @@ export default function App() {
   const [admissionsOpen, setAdmissionsOpen] = useState(false);
   const [visitOpen, setVisitOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
+  const [booting, setBooting] = useState(true);
+
+  useEffect(() => {
+    const t = setTimeout(() => setBooting(false), 1100);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 500);
@@ -364,6 +371,16 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white text-slate-700">
+      <AnimatePresence>
+        {booting && (
+          <FullPageLoader
+            key="boot-loader"
+            label="Preparing the learning playground..."
+            sublabel="Fetching school data and getting things ready."
+          />
+        )}
+      </AnimatePresence>
+
       <Navigation
         page={page}
         onNavigate={navigate}

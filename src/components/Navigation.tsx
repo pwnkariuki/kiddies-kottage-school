@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   Calendar,
   Clock,
+  EnvelopeSimple,
   House,
   List,
   MapPin,
@@ -72,13 +73,29 @@ export default function Navigation({
               {CONTACT.address}, {CONTACT.city}
             </span>
           </div>
-          <a
-            href={`tel:${CONTACT.tel[0]}`}
-            className="inline-flex items-center gap-1.5 text-kkyellow transition hover:text-white"
-          >
-            <Phone className="h-4 w-4" weight="fill" />
-            Call {CONTACT.phones[0]}
-          </a>
+          <div className="flex items-center gap-5">
+            <a
+              href={`tel:${CONTACT.tel[0]}`}
+              className="inline-flex items-center gap-1.5 text-kkyellow transition hover:text-white"
+            >
+              <Phone className="h-4 w-4" weight="fill" />
+              {CONTACT.phones[0]}
+            </a>
+            <a
+              href={`tel:${CONTACT.tel[1]}`}
+              className="inline-flex items-center gap-1.5 text-kkyellow transition hover:text-white"
+            >
+              <Phone className="h-4 w-4" weight="fill" />
+              {CONTACT.phones[1]}
+            </a>
+            <a
+              href={`mailto:${CONTACT.email}`}
+              className="inline-flex items-center gap-1.5 text-kkyellow transition hover:text-white"
+            >
+              <EnvelopeSimple className="h-4 w-4" weight="fill" />
+              {CONTACT.email}
+            </a>
+          </div>
         </div>
       </div>
 
@@ -183,6 +200,31 @@ export default function Navigation({
                   <Calendar className="h-4 w-4" weight="fill" />
                   Apply for Admission
                 </button>
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  <a
+                    href={`tel:${CONTACT.tel[0]}`}
+                    className="inline-flex flex-col items-center gap-1 rounded-xl border border-slate-200 px-2 py-2.5 text-[11px] font-bold text-kknavy"
+                  >
+                    <Phone className="h-4 w-4 text-kkblue" weight="fill" />
+                    Call
+                  </a>
+                  <a
+                    href={`mailto:${CONTACT.email}`}
+                    className="inline-flex flex-col items-center gap-1 rounded-xl border border-slate-200 px-2 py-2.5 text-[11px] font-bold text-kknavy"
+                  >
+                    <EnvelopeSimple className="h-4 w-4 text-kkblue" weight="fill" />
+                    Email
+                  </a>
+                  <a
+                    href={`https://wa.me/${CONTACT.whatsapp.replace("+", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex flex-col items-center gap-1 rounded-xl border border-slate-200 px-2 py-2.5 text-[11px] font-bold text-kknavy"
+                  >
+                    <WhatsappLogo className="h-4 w-4 text-kkgreen" weight="fill" />
+                    WhatsApp
+                  </a>
+                </div>
               </div>
             </motion.div>
           )}

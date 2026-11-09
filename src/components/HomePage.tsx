@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -20,6 +21,7 @@ import {
   TESTIMONIALS,
 } from "@/data/schoolData";
 import { ACCENT, BrandIcon } from "@/components/BrandIcon";
+import { GalleryLightbox } from "@/components/Modals";
 import type { PageId } from "@/data/schoolData";
 
 export function Reveal({
@@ -60,8 +62,9 @@ export default function HomePage({
 }: {
   onNavigate: (p: PageId) => void;
   onOpenAdmissions: () => void;
-  onOpenVisit: () => void;
+  	  onOpenVisit: () => void;
 }) {
+  const [lightbox, setLightbox] = useState<number | null>(null);
   return (
     <div>
       {/* HERO */}
@@ -372,16 +375,21 @@ export default function HomePage({
         <div className="mt-10 columns-2 gap-4 [column-fill:_balance] sm:columns-3 lg:columns-4">
           {GALLERY.map((g, i) => (
             <Reveal key={g.id} delay={(i % 4) * 0.05} className="mb-4 break-inside-avoid">
-              <figure className="group relative overflow-hidden rounded-2xl">
+              <button
+                type="button"
+                onClick={() => setLightbox(i)}
+                className="group relative block w-full overflow-hidden rounded-2xl"
+                aria-label={`View photo: ${g.caption}`}
+              >
                 <img
                   src={g.src}
                   alt={g.caption}
                   className="w-full object-cover transition duration-500 group-hover:scale-105"
                 />
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-kknavy/85 to-transparent p-3 text-xs font-bold text-white opacity-0 transition group-hover:opacity-100">
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-kknavy/85 to-transparent p-3 text-left text-xs font-bold text-white opacity-0 transition group-hover:opacity-100">
                   {g.caption}
                 </figcaption>
-              </figure>
+              </button>
             </Reveal>
           ))}
         </div>
@@ -470,6 +478,13 @@ export default function HomePage({
           </div>
         </Reveal>
       </section>
+
+      <GalleryLightbox
+        index={lightbox}
+        onClose={() => setLightbox(null)}
+        onIndexChange={setLightbox}
+        items={GALLERY}
+      />
     </div>
   );
 }
