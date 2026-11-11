@@ -51,12 +51,22 @@ export function AboutView({
       <PageHead
         eyebrow="About Us"
         title="A second home where children flourish"
-        intro={`Founded in ${BRAND.established}, ${BRAND.name} blends the Montessori method, Kenya's CBC and Christian values on a safe campus along Utawala-Githunguri Road.`}
+        intro={`Founded in ${BRAND.established}, ${BRAND.name} delivers Kenya's CBC alongside Christian values on a safe campus along Utawala-Githunguri Road.`}
       />
       <section className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-2">
         <Reveal>
           <div className="overflow-hidden rounded-3xl shadow-xl ring-1 ring-blue-100/70">
-            <img src={GALLERY[2].src} alt="Outdoor playground" className="aspect-[4/3] w-full object-cover" />
+            <img
+              src={GALLERY[2].src}
+              srcSet={GALLERY[2].srcSet}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              alt="Learning together outdoors"
+              className="aspect-[4/3] w-full object-cover"
+              width={GALLERY[2].width}
+              height={GALLERY[2].height}
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         </Reveal>
         <Reveal delay={0.1}>
@@ -102,7 +112,7 @@ export function AboutView({
                 </h3>
                 <p className="mt-2 text-slate-600">
                   To nurture confident, curious and compassionate learners through
-                  hands-on Montessori and CBC education, grounded in Christian
+                  hands-on CBC education, grounded in Christian
                   values and a deep care for every child.
                 </p>
               </div>
@@ -169,7 +179,7 @@ export function AcademicsView({
       <PageHead
         eyebrow="Academics"
         title="A clear path from Playgroup to Grade 6"
-        intro="Competency-Based Curriculum enriched with the Montessori method, taught by warm, qualified teachers."
+        intro="Kenya's Competency-Based Curriculum, taught by warm, qualified teachers from Playgroup to Grade 6."
       />
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="flex flex-wrap justify-center gap-2">
@@ -441,8 +451,14 @@ export function StudentLifeView({
               >
                 <img
                   src={g.src}
+                  srcSet={g.srcSet}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                   alt={g.caption}
                   className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+                  width={g.width}
+                  height={g.height}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-kknavy/85 to-transparent p-2.5 text-left text-xs font-bold text-white opacity-0 transition group-hover:opacity-100">
                   {g.caption}

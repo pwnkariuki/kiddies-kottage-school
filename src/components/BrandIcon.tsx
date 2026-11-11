@@ -161,7 +161,7 @@ export function PageHead({
         className="absolute inset-0 opacity-90"
         style={{
           background:
-            "radial-gradient(60% 80% at 90% 0%, #1672b9 0%, transparent 55%), radial-gradient(50% 70% at 0% 100%, #0d5084 0%, transparent 55%)",
+            "radial-gradient(60% 80% at 90% 0%, #008fbd 0%, transparent 55%), radial-gradient(50% 70% at 0% 100%, #056487 0%, transparent 55%)",
         }}
       />
       <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
@@ -192,7 +192,7 @@ export function Cta({
               Give your child a joyful, secure start
             </h2>
             <p className="mt-2 text-blue-100">
-              Admissions are open for 2025 at Kiddies Kottage School.
+              Admissions are open throughout the year at Kiddies Kottage School.
             </p>
           </div>
           <button

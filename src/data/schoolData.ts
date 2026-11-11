@@ -54,6 +54,9 @@ export interface FeatureCard {
 export interface GalleryItem {
   id: string;
   src: string;
+  srcSet: string;
+  width: number;
+  height: number;
   caption: string;
   category: string;
   tall?: boolean;
@@ -113,9 +116,6 @@ export interface InquiryPayload {
   createdAt: string;
 }
 
-const IMG =
-  "https://dala-prod-public-storage.s3.eu-west-1.amazonaws.com/generated-images/d8935a85-55c4-408d-bad5-e71b574034c0";
-
 export const BRAND = {
   name: "Kiddies Kottage School",
   short: "Kiddies Kottage",
@@ -156,9 +156,9 @@ export const STATS = [
 
 export const APPROACH_PILLARS: ApproachPillar[] = [
   {
-    title: "Montessori Method",
+    title: "Learning Through Play",
     blurb:
-      "Hands-on, self-paced learning with real materials that build independence, focus and practical life skills.",
+      "Hands-on learning and guided play that build curiosity, independence, focus and practical life skills.",
     icon: "blocks",
     accent: "blue",
   },
@@ -208,7 +208,7 @@ export const ACADEMIC_LEVELS: AcademicLevel[] = [
     grades: "PP1 & PP2",
     accent: "blue",
     summary:
-      "CBC pre-primary levels that grow confidence, early literacy and numeracy through Montessori materials and guided play.",
+      "CBC pre-primary levels that grow confidence, early literacy and numeracy through guided play and discovery.",
     highlights: [
       "Creative expressions and psychomotor skills",
       "Signs, sounds and early reading",
@@ -280,7 +280,7 @@ export const FEATURES: FeatureCard[] = [
   {
     title: "Qualified Teachers",
     blurb:
-      "Warm, TSC-trained and Montessori-certified educators who know every child by name and by need.",
+      "Warm, TSC-trained educators who know every child by name and support their individual needs.",
     icon: "users",
     accent: "red",
   },
@@ -425,15 +425,51 @@ export const ACTIVITIES: Activity[] = [
   },
 ];
 
+const schoolImagePath = "/images/school";
+
+function responsiveSchoolImage(
+  slug: string,
+  originalWidth: number,
+  originalHeight: number,
+) {
+  const widths = [480, 960, 1600].filter((width) => width < originalWidth);
+  widths.push(Math.min(originalWidth, 1600));
+  const uniqueWidths = [...new Set(widths)].sort((a, b) => a - b);
+  const fallbackWidth =
+    uniqueWidths.find((width) => width >= 960) ??
+    uniqueWidths[uniqueWidths.length - 1];
+
+  return {
+    src: `${schoolImagePath}/${slug}-${fallbackWidth}.webp`,
+    srcSet: uniqueWidths
+      .map((width) => `${schoolImagePath}/${slug}-${width}.webp ${width}w`)
+      .join(", "),
+    width: originalWidth,
+    height: originalHeight,
+  };
+}
+
 export const GALLERY: GalleryItem[] = [
-  { id: "g1", src: `${IMG}/hero-classroom-77ae3828-1794180352213.webp`, caption: "Bright Montessori classrooms", category: "Classrooms", tall: true },
-  { id: "g2", src: `${IMG}/library-reading-cf1c1167-1794180352682.webp`, caption: "Cosy reading corner", category: "Literacy" },
-  { id: "g3", src: `${IMG}/playground-outdoor-3085eaa7-1794180353862.webp`, caption: "Safe outdoor playground", category: "Play", tall: true },
-  { id: "g4", src: `${IMG}/art-crafts-72fc58d4-1794180352292.webp`, caption: "Creative arts and crafts", category: "Arts" },
-  { id: "g5", src: `${IMG}/music-dance-39622291-1794180353259.webp`, caption: "Music and dance sessions", category: "Music" },
-  { id: "g6", src: `${IMG}/science-hands-c6d56623-1794180357555.webp`, caption: "Hands-on CBC science", category: "Academics", tall: true },
-  { id: "g7", src: `${IMG}/healthy-meal-e37fb0ee-1794180357849.webp`, caption: "Nutritious balanced meals", category: "Dining" },
-  { id: "g8", src: `${IMG}/graduation-uniform-0038af43-1794180357312.webp`, caption: "Proud pupils in uniform", category: "Community" },
+  { id: "g1", ...responsiveSchoolImage("kids-outdoor-group", 2048, 1362), caption: "Children enjoying activities at school", category: "Activities", tall: true },
+  { id: "g2", ...responsiveSchoolImage("sports-day", 2048, 1362), caption: "Pupils taking part in sports day", category: "Activities", tall: true },
+  { id: "g3", ...responsiveSchoolImage("outdoor-learning", 1280, 960), caption: "Learning together outdoors", category: "Learning" },
+  { id: "g4", ...responsiveSchoolImage("school-lunch", 946, 2048), caption: "A nutritious school meal", category: "Dining", tall: true },
+  { id: "g5", ...responsiveSchoolImage("classroom-community", 1080, 1080), caption: "A joyful classroom moment", category: "Classrooms" },
+  { id: "g6", ...responsiveSchoolImage("classroom-celebration", 1200, 1200), caption: "Celebrating together in class", category: "Classrooms" },
+  { id: "g7", ...responsiveSchoolImage("dance-performance", 900, 900), caption: "Music and dance at school", category: "Activities" },
+  { id: "g8", ...responsiveSchoolImage("graduation-portrait-a", 638, 960), caption: "A proud school graduate", category: "Community", tall: true },
+  { id: "g9", ...responsiveSchoolImage("graduation-portrait-b", 638, 960), caption: "Celebrating a learner's graduation", category: "Community", tall: true },
+  { id: "g10", ...responsiveSchoolImage("school-celebration", 1593, 1600), caption: "A school celebration", category: "Activities", tall: true },
+  { id: "g11", ...responsiveSchoolImage("mascot-event", 850, 1600), caption: "A special day with the school mascot", category: "Community", tall: true },
+  { id: "g12", ...responsiveSchoolImage("community-group", 1508, 2010), caption: "Pupils and families together", category: "Community", tall: true },
+  { id: "g13", ...responsiveSchoolImage("school-assembly", 1536, 2048), caption: "Gathering for a school event", category: "Activities", tall: true },
+  { id: "g14", ...responsiveSchoolImage("campus-community", 1536, 2048), caption: "A day together on campus", category: "Community", tall: true },
+  { id: "g15", ...responsiveSchoolImage("covered-classroom", 1536, 2048), caption: "Learning together under the covered area", category: "Learning", tall: true },
+  { id: "g16", ...responsiveSchoolImage("indoor-activity", 1536, 2048), caption: "Indoor activities with classmates", category: "Activities", tall: true },
+  { id: "g17", ...responsiveSchoolImage("learner-portrait", 1536, 2048), caption: "A Kiddies Kottage learner", category: "Community", tall: true },
+  { id: "g18", ...responsiveSchoolImage("school-meal", 1536, 2048), caption: "Sharing a meal at school", category: "Dining", tall: true },
+  { id: "g19", ...responsiveSchoolImage("school-team", 2048, 1362), caption: "The school team", category: "Community" },
+  { id: "g20", ...responsiveSchoolImage("school-performance", 2048, 1362), caption: "Pupils performing at school", category: "Activities" },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
@@ -518,7 +554,7 @@ export const AGE_CRITERIA: AgeCriterion[] = [
 
 export const FAQS: Faq[] = [
   { q: "What ages do you admit?", a: "We welcome learners from 2 years old in Playgroup through Grade 6, typically up to 12 years." },
-  { q: "Do you follow the CBC curriculum?", a: "Yes. We are fully aligned with the Kenya Competency-Based Curriculum from pre-primary through upper primary, enriched with the Montessori method." },
+  { q: "Do you follow the CBC curriculum?", a: "Yes. We are fully aligned with the Kenya Competency-Based Curriculum from pre-primary through upper primary." },
   { q: "Is the school a Christian school?", a: "We are a Christ-centred school that nurtures faith, kindness and service while respecting every family." },
   { q: "What are the school hours?", a: "We operate Monday to Friday, 7:00 AM to 5:30 PM, with drop-off from 7:30 AM." },
   { q: "Do you provide meals?", a: "Yes, we serve a balanced hot lunch and fresh fruit snacks planned with a nutritionist." },

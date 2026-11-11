@@ -325,7 +325,7 @@ export function VisitModal({
             What to expect on a tour
           </div>
           <ul className="mt-2 space-y-1 text-sm text-slate-600">
-            <li>Meet our Montessori-certified teachers</li>
+            <li>Meet our warm, qualified teachers</li>
             <li>Visit bright, safe classrooms &amp; playground</li>
             <li>Learn about CBC, meals and co-curricular clubs</li>
           </ul>
@@ -464,8 +464,13 @@ export function GalleryLightbox({
           >
             <img
               src={active.src}
+              srcSet={active.srcSet}
+              sizes="(min-width: 896px) 896px, 100vw"
               alt={active.caption}
               className="max-h-[75vh] w-full object-contain bg-slate-900"
+              width={active.width}
+              height={active.height}
+              decoding="async"
             />
             <figcaption className="flex items-center justify-between gap-3 px-5 py-3">
               <span className="text-sm font-bold text-kknavy">{active.caption}</span>

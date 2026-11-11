@@ -20,16 +20,24 @@ export default function Footer({
     <footer className="bg-kknavy text-slate-300">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2.5">
-            <div className="grid h-11 w-11 place-items-center rounded-2xl bg-kkblue text-kkyellow">
-              <span className="font-display text-xl font-extrabold">KK</span>
-            </div>
+          <div className="flex items-center gap-3">
+            <img
+              src="/images/school/kiddies-kottage-logo-256.webp"
+              srcSet="/images/school/kiddies-kottage-logo-256.webp 256w, /images/school/kiddies-kottage-logo-512.webp 512w"
+              sizes="48px"
+              alt="Kiddies Kottage School logo"
+              width={48}
+              height={46}
+              className="h-12 w-12 rounded-xl bg-white object-contain"
+              loading="lazy"
+              decoding="async"
+            />
             <p className="font-display text-lg font-extrabold text-white">
               {BRAND.name}
             </p>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-slate-400">
-            {BRAND.tagline}. A Christ-centred Montessori and CBC school raising
+            {BRAND.tagline}. A Christ-centred CBC school raising
             confident, kind and curious learners since {BRAND.established}.
           </p>
           <div className="mt-5 flex gap-2">

@@ -73,12 +73,12 @@ export default function HomePage({
           className="absolute inset-0 opacity-90"
           style={{
             background:
-              "radial-gradient(60% 60% at 80% 0%, #1672b9 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, #0d5084 0%, transparent 55%)",
+              "radial-gradient(60% 60% at 80% 0%, #008fbd 0%, transparent 60%), radial-gradient(50% 50% at 0% 100%, #056487 0%, transparent 55%)",
           }}
         />
         <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-kkyellow/20 blur-2xl" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-2 lg:py-24">
-          <div>
+          <div className="order-2 lg:order-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -104,7 +104,7 @@ export default function HomePage({
               transition={{ duration: 0.6, delay: 0.16 }}
               className="mt-5 max-w-xl text-lg leading-relaxed text-slate-300"
             >
-              {BRAND.name} is a warm, Christ-centred Montessori and CBC school on
+              {BRAND.name} is a warm, Christ-centred CBC school on
               Utawala-Githunguri Road, nurturing curious, confident and kind
               learners since {BRAND.established}.
             </motion.p>
@@ -149,13 +149,20 @@ export default function HomePage({
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative"
+            className="relative order-1 lg:order-2"
           >
             <div className="overflow-hidden rounded-3xl ring-1 ring-white/15 shadow-2xl">
               <img
                 src={GALLERY[0].src}
-                alt="Children learning in a bright Montessori classroom"
+                srcSet={GALLERY[0].srcSet}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt="Children enjoying activities at school"
                 className="aspect-[4/3] w-full object-cover"
+                width={GALLERY[0].width}
+                height={GALLERY[0].height}
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
             <div className="absolute -left-4 top-6 hidden rounded-2xl bg-white p-3 shadow-xl sm:block">
@@ -165,7 +172,7 @@ export default function HomePage({
                 </div>
                 <div>
                   <p className="font-display text-sm font-extrabold text-kknavy">
-                    CBC + Montessori
+                    CBC + Care
                   </p>
                   <p className="text-xs text-slate-500">Learn by doing</p>
                 </div>
@@ -202,7 +209,7 @@ export default function HomePage({
         <Reveal className="mx-auto max-w-2xl text-center">
           <Eyebrow>Our Learning Approach</Eyebrow>
           <h2 className="mt-4 font-display text-3xl font-extrabold text-kknavy sm:text-4xl">
-            A gentle blend of Montessori, CBC &amp; Christian values
+            A gentle blend of CBC learning &amp; Christian values
           </h2>
           <p className="mt-4 text-slate-600">
             We follow the child, not just the syllabus. Hands-on materials,
@@ -383,8 +390,14 @@ export default function HomePage({
               >
                 <img
                   src={g.src}
+                  srcSet={g.srcSet}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                   alt={g.caption}
                   className="w-full object-cover transition duration-500 group-hover:scale-105"
+                  width={g.width}
+                  height={g.height}
+                  loading="lazy"
+                  decoding="async"
                 />
                 <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-kknavy/85 to-transparent p-3 text-left text-xs font-bold text-white opacity-0 transition group-hover:opacity-100">
                   {g.caption}
@@ -443,7 +456,7 @@ export default function HomePage({
               className="absolute inset-0 opacity-90"
               style={{
                 background:
-                  "radial-gradient(50% 80% at 100% 0%, #1672b9 0%, transparent 60%), radial-gradient(50% 80% at 0% 100%, #0d5084 0%, transparent 60%)",
+                  "radial-gradient(50% 80% at 100% 0%, #008fbd 0%, transparent 60%), radial-gradient(50% 80% at 0% 100%, #056487 0%, transparent 60%)",
               }}
             />
             <div className="relative">

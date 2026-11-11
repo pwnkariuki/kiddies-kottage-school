@@ -16,16 +16,22 @@ import type { PageId } from "@/data/schoolData";
 
 function Logo() {
   return (
-    <div className="flex items-center gap-2.5">
-      <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-kkblue to-kkblue-dark text-kkyellow shadow-sm ring-1 ring-kkblue-dark/20">
-        <span className="font-display text-xl font-extrabold leading-none">KK</span>
-      </div>
+    <div className="flex items-center gap-3">
+      <img
+        src="/images/school/kiddies-kottage-logo-256.webp"
+        srcSet="/images/school/kiddies-kottage-logo-256.webp 256w, /images/school/kiddies-kottage-logo-512.webp 512w"
+        sizes="48px"
+        alt="Kiddies Kottage School logo"
+        width={48}
+        height={46}
+        className="h-12 w-12 rounded-xl object-contain"
+      />
       <div className="leading-tight">
         <p className="font-display text-[15px] font-extrabold text-kknavy">
           {BRAND.name}
         </p>
         <p className="text-[11px] font-semibold text-kkblue">
-          Montessori &bull; CBC &bull; Faith
+          CBC &bull; Care &bull; Character
         </p>
       </div>
     </div>
