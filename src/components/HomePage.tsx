@@ -86,7 +86,7 @@ export default function HomePage({
             >
               <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-bold text-kkyellow ring-1 ring-white/15">
                 <Star className="h-3.5 w-3.5" weight="fill" />
-                Admissions open for 2025 &bull; Playgroup to Grade 6
+                Admissions open for 2027 &bull; Playgroup to Grade 6
               </span>
             </motion.div>
             <motion.h1
@@ -451,7 +451,7 @@ export default function HomePage({
                 Ready to give your child a joyful start?
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-slate-300">
-                Admissions are open for 2025. Visit our campus on
+                Admissions are open for 2027. Visit our campus on
                 Utawala-Githunguri Road or send an enquiry today.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
