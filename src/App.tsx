@@ -11,7 +11,7 @@ import {
   MapPin,
   Phone,
   WhatsappLogo,
-} from "@phosphor-icons/react";
+} from "@/lib/icons";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import HomePage from "@/components/HomePage";
@@ -28,6 +28,7 @@ import {
 } from "@/components/Modals";
 import { Eyebrow, PageHead, Reveal } from "@/components/BrandIcon";
 import { FullPageLoader } from "@/components/CustomLoader";
+import { LegalPage } from "@/components/LegalPages";
 import {
   ADMISSION_STEPS,
   AGE_CRITERIA,
@@ -103,7 +104,7 @@ function AdmissionsView({
                         className="flex items-start gap-2 text-xs text-slate-600"
                       >
                         <CheckCircle
-                          className="mt-0.5 h-4 w-4 shrink-0 text-kkgreen"
+                          className="mt-0.5 h-4 w-4 shrink-0 text-kkblue"
                           weight="fill"
                         />
                         {d}
@@ -307,7 +308,7 @@ function ContactView() {
                 href={`https://wa.me/${CONTACT.whatsapp.replace("+", "")}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl bg-kkgreen px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:bg-emerald-600 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-xl bg-kkblue px-5 py-3 text-sm font-extrabold text-white shadow-sm transition hover:bg-kkblue-dark active:scale-95"
               >
                 <WhatsappLogo className="h-5 w-5" weight="fill" /> Chat on WhatsApp
               </a>
@@ -333,7 +334,7 @@ function ContactView() {
           <div className="overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
             <iframe
               title="School location map"
-              src={`https://www.google.com/maps?q=${CONTACT.mapsQuery}&output=embed`}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7977.6277877576995!2d36.97998144051893!3d-1.2856692448084215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f6c85f7f8af5d%3A0xfc877a3f11ef58a4!2sKiddies%20Kottage%20Pre%20%26%20Primary%20School!5e0!3m2!1sen!2ske!4v1794412569511!5m2!1sen!2ske"
               className="h-[360px] w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -370,7 +371,7 @@ export default function App() {
   const openAdmissions = () => setAdmissionsOpen(true);
 
   return (
-    <div className="min-h-screen bg-white text-slate-700">
+    <div className="min-h-screen bg-background text-foreground">
       <AnimatePresence>
         {booting && (
           <FullPageLoader
@@ -417,6 +418,9 @@ export default function App() {
               <AdmissionsView onOpenAdmissions={openAdmissions} />
             )}
             {page === "contact" && <ContactView />}
+            {(page === "privacy" || page === "terms") && (
+              <LegalPage page={page} />
+            )}
           </motion.div>
         </AnimatePresence>
       </main>

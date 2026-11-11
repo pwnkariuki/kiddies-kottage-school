@@ -18,9 +18,9 @@ interface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export default function GlowingCard({
-  fromColor = "#4158D0",
-  viaColor = "#C850C0",
-  toColor = "#FFCC70",
+  fromColor = "#0090c0",
+  viaColor = "#f07818",
+  toColor = "#00759c",
   className,
   ...props
 }: GlowCardProps) {
@@ -41,7 +41,7 @@ export default function GlowingCard({
           className="blur-20 pointer-events-none absolute inset-0 rounded-[calc(1.5rem-2px)] transition-[filter] duration-500 ease-in-out"
           style={{ backgroundImage: gradient }}
         />
-        <div className="relative flex h-64 flex-col gap-2 bg-blue-950 p-4">
+        <div className="relative flex h-64 flex-col gap-2 bg-kknavy p-4">
           <div className="mb-2 text-xl font-bold text-gray-50">Glowing</div>
 
           <div className="flex-1 text-sm font-medium text-gray-100/80">

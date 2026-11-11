@@ -28,7 +28,7 @@ import {
   Users,
   Drop,
   type Icon,
-} from "@phosphor-icons/react";
+} from "@/lib/icons";
 
 const REGISTRY: Record<string, Icon> = {
   atom: Atom,
@@ -88,28 +88,28 @@ export const ACCENT: Record<
     bg: "bg-kkyellow",
     soft: "bg-kkyellow/20",
     ring: "ring-kkyellow/40",
-    grad: "from-kkyellow to-amber-400",
+    grad: "from-kkyellow to-kkyellow-dark",
   },
   red: {
     text: "text-kkred",
     bg: "bg-kkred",
     soft: "bg-kkred/10",
     ring: "ring-kkred/30",
-    grad: "from-kkred to-rose-500",
+    grad: "from-kkred to-kkred",
   },
   purple: {
     text: "text-kkpurple",
     bg: "bg-kkpurple",
     soft: "bg-kkpurple/10",
     ring: "ring-kkpurple/30",
-    grad: "from-kkpurple to-indigo-500",
+    grad: "from-kkpurple to-kkpurple",
   },
   green: {
     text: "text-kkgreen",
     bg: "bg-kkgreen",
     soft: "bg-kkgreen/10",
     ring: "ring-kkgreen/30",
-    grad: "from-kkgreen to-emerald-500",
+    grad: "from-kkgreen to-kkgreen",
   },
 };
 
@@ -139,8 +139,8 @@ export function Reveal({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full bg-kkblue-soft px-3.5 py-1.5 text-xs font-extrabold uppercase tracking-wider text-kkblue ring-1 ring-kkblue/15">
-      <span className="h-1.5 w-1.5 rounded-full bg-kkyellow" />
+    <span className="school-eyebrow inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-kkblue">
+      <span className="h-2 w-2 bg-kkyellow" />
       {children}
     </span>
   );
@@ -156,20 +156,13 @@ export function PageHead({
   intro: string;
 }) {
   return (
-    <section className="relative overflow-hidden bg-kknavy">
-      <div
-        className="absolute inset-0 opacity-90"
-        style={{
-          background:
-            "radial-gradient(60% 80% at 90% 0%, #008fbd 0%, transparent 55%), radial-gradient(50% 70% at 0% 100%, #056487 0%, transparent 55%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-3xl px-6 py-16 text-center sm:py-20">
+    <section className="bg-kkslate py-14 md:py-20">
+      <div className="school-shell max-w-5xl">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+        <h1 className="mt-5 max-w-4xl font-display text-4xl font-extrabold leading-[1.08] text-kknavy md:text-6xl">
           {title}
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-slate-300">{intro}</p>
+        <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600 md:text-lg">{intro}</p>
       </div>
     </section>
   );
@@ -183,25 +176,26 @@ export function Cta({
   label?: string;
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16">
+    <section className="school-shell py-14 md:py-20">
       <Reveal>
-        <div className="relative flex flex-col items-center justify-between gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-kkblue to-kkblue-dark px-8 py-10 text-center shadow-lg ring-1 ring-white/10 sm:flex-row sm:text-left">
-          <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full bg-kkyellow/20 blur-2xl" />
-          <div className="relative">
-            <h2 className="font-display text-2xl font-extrabold text-white sm:text-3xl">
+        <div className="relative flex flex-col items-start justify-between gap-6 overflow-hidden bg-kkblue px-7 py-10 text-white md:flex-row md:items-center md:px-14 md:py-14">
+          <div className="relative z-10 max-w-2xl">
+            <Eyebrow>We’d love to meet you</Eyebrow>
+            <h2 className="mt-4 font-display text-3xl font-extrabold leading-tight text-white sm:text-4xl">
               Give your child a joyful, secure start
             </h2>
-            <p className="mt-2 text-blue-100">
+            <p className="mt-4 max-w-xl leading-7 text-white/80">
               Admissions are open throughout the year at Kiddies Kottage School.
             </p>
           </div>
           <button
             onClick={onOpenAdmissions}
-            className="relative inline-flex shrink-0 items-center gap-2 rounded-xl bg-kkyellow px-6 py-3.5 text-sm font-extrabold text-kknavy shadow-sm shadow-kknavy/20 transition hover:bg-kkyellow-dark hover:text-white active:scale-95"
+            className="relative z-10 inline-flex shrink-0 items-center gap-2 rounded-sm bg-kkyellow px-5 py-3 text-sm font-bold text-kknavy transition hover:bg-kkyellow-dark hover:text-white active:scale-95"
           >
             <Calendar className="h-4 w-4" weight="fill" />
             {label}
           </button>
+          <span aria-hidden="true" className="absolute -bottom-12 -right-3 hidden h-52 w-52 rotate-12 border-[24px] border-white/10 md:block" />
         </div>
       </Reveal>
     </section>

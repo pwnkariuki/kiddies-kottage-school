@@ -7,7 +7,7 @@ import {
   Phone,
   WhatsappLogo,
   YoutubeLogo,
-} from "@phosphor-icons/react";
+} from "@/lib/icons";
 import { BRAND, CONTACT, NAV_ITEMS } from "@/data/schoolData";
 import type { PageId } from "@/data/schoolData";
 
@@ -18,7 +18,7 @@ export default function Footer({
 }) {
   return (
     <footer className="bg-kknavy text-slate-300">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-2 lg:grid-cols-4">
+      <div className="school-shell grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 md:py-16">
         <div>
           <div className="flex items-center gap-3">
             <img
@@ -28,7 +28,7 @@ export default function Footer({
               alt="Kiddies Kottage School logo"
               width={48}
               height={46}
-              className="h-12 w-12 rounded-xl bg-white object-contain"
+              className="h-12 w-12 bg-white object-contain"
               loading="lazy"
               decoding="async"
             />
@@ -62,7 +62,7 @@ export default function Footer({
         </div>
 
         <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-kkyellow">
+          <h4 className="font-display text-sm font-bold text-white">
             Explore
           </h4>
           <ul className="mt-4 space-y-2.5 text-sm">
@@ -80,7 +80,7 @@ export default function Footer({
         </div>
 
         <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-kkyellow">
+          <h4 className="font-display text-sm font-bold text-white">
             Visit &amp; Contact
           </h4>
           <ul className="mt-4 space-y-3.5 text-sm text-slate-400">
@@ -116,7 +116,7 @@ export default function Footer({
         </div>
 
         <div>
-          <h4 className="font-display text-sm font-bold uppercase tracking-wider text-kkyellow">
+          <h4 className="font-display text-sm font-bold text-white">
             Opening Hours
           </h4>
           <div className="mt-4 flex items-start gap-2.5 text-sm text-slate-400">
@@ -127,7 +127,7 @@ export default function Footer({
             href={`https://www.google.com/maps/search/?api=1&query=${CONTACT.mapsQuery}`}
             target="_blank"
             rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-kkblue px-4 py-2.5 text-sm font-bold text-white transition hover:bg-kkblue-dark"
+            className="mt-5 inline-flex items-center gap-2 rounded-sm bg-kkyellow px-4 py-2.5 text-sm font-bold text-kknavy transition hover:bg-kkyellow-dark hover:text-white"
           >
             <MapPin className="h-4 w-4" weight="fill" />
             Get Directions
@@ -140,11 +140,30 @@ export default function Footer({
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-slate-500 sm:flex-row">
+        <div className="school-shell flex flex-col items-center justify-between gap-2 border-t border-white/15 py-4 text-xs text-slate-400 sm:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.
           </p>
-          <p>Utawala-Githunguri Road &bull; Nairobi, Kenya</p>
+          <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
+            <p>Utawala-Githunguri Road &bull; Nairobi, Kenya</p>
+            <nav aria-label="Legal">
+              <button
+                onClick={() => onNavigate("privacy")}
+                className="transition-colors hover:text-white"
+              >
+                Privacy Policy
+              </button>
+              <span className="px-2 text-white/40" aria-hidden="true">
+                |
+              </span>
+              <button
+                onClick={() => onNavigate("terms")}
+                className="transition-colors hover:text-white"
+              >
+                Terms &amp; Conditions
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     </footer>

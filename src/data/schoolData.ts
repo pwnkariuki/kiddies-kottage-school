@@ -7,7 +7,9 @@ export type PageId =
   | "cocurricular"
   | "studentlife"
   | "admissions"
-  | "contact";
+  | "contact"
+  | "privacy"
+  | "terms";
 
 export interface NavItem {
   id: PageId;

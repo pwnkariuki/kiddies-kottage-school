@@ -9,7 +9,7 @@ import {
   PaperPlaneTilt,
   Phone,
   X,
-} from "@phosphor-icons/react";
+} from "@/lib/icons";
 import { ACADEMIC_LEVELS, CONTACT, GALLERY } from "@/data/schoolData";
 import type { GalleryItem, InquiryPayload } from "@/data/schoolData";
 import { ButtonLoader } from "@/components/CustomLoader";
@@ -141,8 +141,8 @@ export function InquiryForm({ compact }: { compact?: boolean }) {
     saveInquiry(payload);
     setTimeout(() => {
       setBusy(false);
-      toast.success("Enquiry received and saved to admissions registry.", {
-        description: `Our admissions desk will call you at ${payload.phone} within 24 hours.`,
+      toast.success("Enquiry saved in this browser.", {
+        description: `Your details are stored on this device only. Call ${CONTACT.phones[0]} to reach the admissions desk.`,
       });
       setForm({
         parentName: "",
@@ -233,7 +233,7 @@ export function InquiryForm({ compact }: { compact?: boolean }) {
         ) : (
           <>
             <PaperPlaneTilt className="h-4 w-4" weight="fill" />
-            Send Enquiry
+            Save Enquiry
           </>
         )}
       </button>

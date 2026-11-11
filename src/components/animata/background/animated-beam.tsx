@@ -56,12 +56,12 @@ function Beam({ index }: { index: number }) {
 
 function Background() {
   return (
-    <div className="absolute inset-0 z-0 flex flex-row justify-center overflow-hidden bg-linear-to-t from-indigo-900 to-indigo-950">
+    <div className="absolute inset-0 z-0 flex flex-row justify-center overflow-hidden bg-linear-to-t from-kkblue-dark to-kknavy">
       {/* soft glow */}
       <div
         style={{
           background:
-            "radial-gradient(50% 50% at 50% 50%,#072a39 0%,rgb(7,42,57) 50%,rgba(7,42,57,0) 100%)",
+            "radial-gradient(50% 50% at 50% 50%,#0090c0 0%,rgb(0 144 192 / 0.5) 50%,rgba(0,144,192,0) 100%)",
         }}
         className="absolute inset-0 top-1/2 h-full w-full rounded-full opacity-40"
       />

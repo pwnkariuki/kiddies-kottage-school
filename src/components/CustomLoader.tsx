@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { GraduationCap } from "@phosphor-icons/react";
+import { GraduationCap } from "@/lib/icons";
 
 const SIZES = {
   sm: { ring: "h-14 w-14", border: "border-[3px]", icon: "h-6 w-6" },
@@ -28,7 +28,7 @@ export function LoaderMark({
         transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
       />
       <motion.span
-        className="grid place-items-center rounded-full bg-white shadow-md shadow-kkblue/10 ring-1 ring-blue-100"
+        className="grid place-items-center rounded-full bg-white shadow-md shadow-kkblue/10 ring-1 ring-kkblue/20"
         style={{ width: "66%", height: "66%" }}
         animate={reduce ? undefined : { scale: [1, 1.12, 1] }}
         transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
@@ -42,12 +42,12 @@ export function LoaderMark({
 /** Four bouncing brand-colored dots. */
 export function LoaderDots({ className = "" }: { className?: string }) {
   const reduce = useReducedMotion();
-  const colors = ["bg-kkblue", "bg-kkyellow", "bg-kkgreen", "bg-kkred"];
+  const colors = ["bg-kkblue", "bg-kkyellow", "bg-kkblue", "bg-kkyellow"];
   return (
     <div className={`flex items-center justify-center gap-1.5 ${className}`}>
       {colors.map((c, i) => (
         <motion.span
-          key={c}
+          key={i}
           className={`h-2 w-2 rounded-full ${c}`}
           animate={reduce ? undefined : { y: [0, -6, 0], opacity: [0.45, 1, 0.45] }}
           transition={{

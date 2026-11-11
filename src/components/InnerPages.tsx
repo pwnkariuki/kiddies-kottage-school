@@ -10,7 +10,7 @@ import {
   Phone,
   ShieldCheck,
   WhatsappLogo,
-} from "@phosphor-icons/react";
+} from "@/lib/icons";
 import {
   ACADEMIC_LEVELS,
   ACTIVITY_CATEGORIES,
@@ -93,8 +93,8 @@ export function AboutView({
         </Reveal>
       </section>
 
-      <section className="bg-kkcream py-20">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="bg-kkcream">
+        <div className="school-shell school-section">
           <Reveal className="mx-auto max-w-2xl text-center">
             <Eyebrow>Mission &amp; Vision</Eyebrow>
             <h2 className="mt-4 font-display text-3xl font-extrabold text-kknavy">
@@ -204,7 +204,7 @@ export function AcademicsView({
           transition={{ duration: 0.35 }}
           className="mt-8 overflow-hidden rounded-3xl border border-blue-100/70 bg-white shadow-sm"
         >
-          <div className={`bg-gradient-to-br ${a.grad} px-8 py-7 text-white`}>
+          <div className="bg-kkblue px-8 py-7 text-white">
             <p className="text-sm font-bold uppercase tracking-wide opacity-90">
               {level.ages} &bull; {level.grades}
             </p>
@@ -222,8 +222,8 @@ export function AcademicsView({
         </motion.div>
       </section>
 
-      <section className="bg-kkcream py-20">
-        <div className="mx-auto max-w-7xl px-6">
+      <section className="bg-kkcream">
+        <div className="school-shell school-section">
           <Reveal className="mx-auto max-w-2xl text-center">
             <Eyebrow>Languages</Eyebrow>
             <h2 className="mt-4 font-display text-3xl font-extrabold text-kknavy">
@@ -362,8 +362,8 @@ export function StudentLifeView({
         </div>
       </section>
 
-      <section className="bg-kkslate py-20">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 lg:grid-cols-2">
+      <section className="bg-kkslate">
+        <div className="school-shell school-section grid gap-8 lg:grid-cols-2">
           <Reveal>
             <div className="h-full rounded-3xl border border-blue-100/70 bg-white p-8 shadow-sm">
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-kkblue-soft text-kkblue">
