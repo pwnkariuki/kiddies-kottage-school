@@ -1,5 +1,4 @@
 import {
-  Clock,
   EnvelopeSimple,
   FacebookLogo,
   InstagramLogo,
@@ -18,7 +17,7 @@ export default function Footer({
 }) {
   return (
     <footer className="bg-kknavy text-slate-300">
-      <div className="school-shell grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-4 md:py-16">
+      <div className="school-shell grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-3 md:py-16">
         <div>
           <div className="flex items-center gap-3">
             <img
@@ -70,7 +69,7 @@ export default function Footer({
               <li key={n.id}>
                 <button
                   onClick={() => onNavigate(n.id)}
-                  className="text-slate-400 transition hover:text-white"
+                  className="micro-link text-slate-400 transition hover:text-white"
                 >
                   {n.label}
                 </button>
@@ -114,29 +113,6 @@ export default function Footer({
             </li>
           </ul>
         </div>
-
-        <div>
-          <h4 className="font-display text-sm font-bold text-white">
-            Opening Hours
-          </h4>
-          <div className="mt-4 flex items-start gap-2.5 text-sm text-slate-400">
-            <Clock className="mt-0.5 h-4 w-4 shrink-0 text-kkblue" weight="fill" />
-            <span>{CONTACT.hours}</span>
-          </div>
-          <a
-            href={`https://www.google.com/maps/search/?api=1&query=${CONTACT.mapsQuery}`}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-sm bg-kkyellow px-4 py-2.5 text-sm font-bold text-kknavy transition hover:bg-kkyellow-dark hover:text-white"
-          >
-            <MapPin className="h-4 w-4" weight="fill" />
-            Get Directions
-          </a>
-          <p className="mt-4 text-xs text-slate-500">
-            Near SDA Church, opposite Ottomart Supermarket on Utawala-Githunguri
-            Road.
-          </p>
-        </div>
       </div>
 
       <div className="border-t border-white/10">
@@ -145,11 +121,10 @@ export default function Footer({
             &copy; {new Date().getFullYear()} {BRAND.name}. All rights reserved.
           </p>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
-            <p>Utawala-Githunguri Road &bull; Nairobi, Kenya</p>
             <nav aria-label="Legal">
               <button
                 onClick={() => onNavigate("privacy")}
-                className="transition-colors hover:text-white"
+                className="micro-link transition-colors hover:text-white"
               >
                 Privacy Policy
               </button>
@@ -158,7 +133,7 @@ export default function Footer({
               </span>
               <button
                 onClick={() => onNavigate("terms")}
-                className="transition-colors hover:text-white"
+                className="micro-link transition-colors hover:text-white"
               >
                 Terms &amp; Conditions
               </button>

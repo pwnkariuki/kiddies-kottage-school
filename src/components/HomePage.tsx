@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Calendar,
@@ -55,6 +55,8 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+const HERO_SLIDES = GALLERY.slice(0, 4);
+
 export default function HomePage({
   onNavigate,
   onOpenAdmissions,
@@ -65,6 +67,20 @@ export default function HomePage({
   	  onOpenVisit: () => void;
 }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [heroSlide, setHeroSlide] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    if (heroPaused || reduceMotion) return;
+    const timer = window.setInterval(() => {
+      setHeroSlide((current) => (current + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [heroPaused, reduceMotion]);
+
+  const activeHeroSlide = HERO_SLIDES[heroSlide];
+
   return (
     <div>
       {/* HERO */}
@@ -136,21 +152,40 @@ export default function HomePage({
           className="school-reveal-delay relative order-1 md:order-2"
         >
           <div className="absolute -right-3 -top-3 z-10 h-20 w-20 border-r-2 border-t-2 border-kkyellow md:-right-5 md:-top-5 md:h-28 md:w-28" />
-          <figure className="relative aspect-[1.13] overflow-hidden bg-kkslate">
-            <img
-              src={GALLERY[0].src}
-              srcSet={GALLERY[0].srcSet}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              alt="Children enjoying activities at school"
-              className="h-full w-full object-cover"
-              width={GALLERY[0].width}
-              height={GALLERY[0].height}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-            />
-            <figcaption className="absolute left-4 top-4 bg-white/95 px-3 py-2 text-xs font-semibold text-kknavy">
-              A place where curiosity takes root
+          <figure
+            className="relative aspect-[1.13] overflow-hidden bg-kkslate"
+            aria-roledescription="carousel"
+            aria-label="School photos"
+            onMouseEnter={() => setHeroPaused(true)}
+            onMouseLeave={() => setHeroPaused(false)}
+            onFocus={() => setHeroPaused(true)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) {
+                setHeroPaused(false);
+              }
+            }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={activeHeroSlide.id}
+                src={activeHeroSlide.src}
+                srcSet={activeHeroSlide.srcSet}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                alt={activeHeroSlide.caption}
+                className="absolute inset-0 h-full w-full object-cover"
+                width={activeHeroSlide.width}
+                height={activeHeroSlide.height}
+                loading={heroSlide === 0 ? "eager" : "lazy"}
+                fetchPriority={heroSlide === 0 ? "high" : "auto"}
+                decoding="async"
+                initial={reduceMotion ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={reduceMotion ? undefined : { opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.35 }}
+              />
+            </AnimatePresence>
+            <figcaption className="absolute left-4 top-4 max-w-[75%] bg-white/95 px-3 py-2 text-xs font-semibold text-kknavy">
+              {activeHeroSlide.caption}
             </figcaption>
           </figure>
           <div className="absolute -bottom-5 left-4 flex items-center gap-3 bg-kkyellow px-4 py-3 text-kknavy md:-left-6 md:bottom-7">

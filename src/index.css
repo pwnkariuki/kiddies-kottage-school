@@ -228,7 +228,17 @@
     transition:
       color 180ms ease,
       background-color 180ms ease,
-      transform 180ms ease;
+      translate 180ms ease,
+      scale 180ms ease,
+      text-decoration-color 180ms ease;
+  }
+  button {
+    transition:
+      color 180ms ease,
+      background-color 180ms ease,
+      border-color 180ms ease,
+      translate 180ms ease,
+      scale 180ms ease;
   }
   a:focus-visible,
   button:focus-visible {
@@ -236,12 +246,25 @@
     outline-offset: 3px;
   }
   @media (hover: hover) {
-    a:hover {
-      transform: translateY(-1px);
+    a:hover,
+    .micro-link:hover {
+      translate: 4px 0;
+      text-decoration-line: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 0.22em;
+      text-decoration-thickness: 1px;
+    }
+    a[aria-label]:hover {
+      text-decoration-line: none;
+    }
+    button:hover {
+      translate: 0 -2px;
     }
   }
-  a:active {
-    transform: translateY(0) scale(0.98);
+  a:active,
+  button:active {
+    translate: 0 0;
+    scale: 0.98;
   }
   @media (prefers-reduced-motion: reduce) {
     *,

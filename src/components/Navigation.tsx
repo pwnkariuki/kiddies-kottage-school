@@ -95,7 +95,7 @@ export default function Navigation({
               <button
                 key={item.id}
                 onClick={() => go(item.id)}
-                className={`relative px-1 py-2 text-[0.82rem] font-semibold transition-colors ${
+                className={`micro-link relative px-1 py-2 text-[0.82rem] font-semibold transition-colors ${
                   page === item.id
                     ? "text-kkblue"
                     : "text-slate-600 hover:text-kkblue"
@@ -158,7 +158,7 @@ export default function Navigation({
                   <button
                     key={item.id}
                     onClick={() => go(item.id)}
-                    className={`flex items-center gap-2 border-b border-slate-100 px-3 py-3 text-left text-sm font-semibold transition ${
+                    className={`micro-link flex items-center gap-2 border-b border-slate-100 px-3 py-3 text-left text-sm font-semibold transition ${
                       page === item.id
                         ? "text-kkblue"
                         : "text-slate-700 hover:text-kkblue"
