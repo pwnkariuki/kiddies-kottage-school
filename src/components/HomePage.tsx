@@ -20,7 +20,8 @@ import {
   STATS,
   TESTIMONIALS,
 } from "@/data/schoolData";
-import { ACCENT, BrandIcon } from "@/components/BrandIcon";
+import { ACCENT } from "@/lib/accent";
+import { BrandIcon } from "@/components/BrandIcon";
 import { GalleryLightbox } from "@/components/Modals";
 import type { PageId } from "@/data/schoolData";
 

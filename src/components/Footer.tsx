@@ -9,6 +9,7 @@ import {
 } from "@/lib/icons";
 import { BRAND, CONTACT, NAV_ITEMS } from "@/data/schoolData";
 import type { PageId } from "@/data/schoolData";
+import { PAGE_PATHS } from "@/lib/seo";
 
 export default function Footer({
   onNavigate,
@@ -67,12 +68,16 @@ export default function Footer({
           <ul className="mt-4 space-y-2.5 text-sm">
             {NAV_ITEMS.map((n) => (
               <li key={n.id}>
-                <button
-                  onClick={() => onNavigate(n.id)}
+                <a
+                  href={PAGE_PATHS[n.id]}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(n.id);
+                  }}
                   className="micro-link text-slate-400 transition hover:text-white"
                 >
                   {n.label}
-                </button>
+                </a>
               </li>
             ))}
           </ul>
@@ -122,21 +127,29 @@ export default function Footer({
           </p>
           <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-6">
             <nav aria-label="Legal">
-              <button
-                onClick={() => onNavigate("privacy")}
+              <a
+                href={PAGE_PATHS.privacy}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate("privacy");
+                }}
                 className="micro-link transition-colors hover:text-white"
               >
                 Privacy Policy
-              </button>
+              </a>
               <span className="px-2 text-white/40" aria-hidden="true">
                 |
               </span>
-              <button
-                onClick={() => onNavigate("terms")}
+              <a
+                href={PAGE_PATHS.terms}
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate("terms");
+                }}
                 className="micro-link transition-colors hover:text-white"
               >
                 Terms &amp; Conditions
-              </button>
+              </a>
             </nav>
           </div>
         </div>

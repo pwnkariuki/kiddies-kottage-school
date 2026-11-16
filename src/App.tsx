@@ -27,7 +27,6 @@ import {
   VisitModal,
 } from "@/components/Modals";
 import { Eyebrow, PageHead, Reveal } from "@/components/BrandIcon";
-import { FullPageLoader } from "@/components/CustomLoader";
 import { LegalPage } from "@/components/LegalPages";
 import {
   ADMISSION_STEPS,
@@ -37,6 +36,11 @@ import {
   FEE_BANDS,
 } from "@/data/schoolData";
 import type { PageId } from "@/data/schoolData";
+import {
+  PAGE_PATHS,
+  resolvePageFromLocation,
+  setPageSeo,
+} from "@/lib/seo";
 
 function AdmissionsView({
   onOpenAdmissions,
@@ -132,6 +136,7 @@ function AdmissionsView({
                 <button
                   key={b.level}
                   onClick={() => setLevel(b.level)}
+                  aria-pressed={level === b.level}
                   className={`flex w-full items-center justify-between gap-4 border-b border-slate-100 px-5 py-4 text-left transition last:border-0 ${
                     level === b.level ? "bg-kkblue/5" : "hover:bg-slate-50"
                   }`}
@@ -203,6 +208,9 @@ function AdmissionsView({
                     className="overflow-hidden rounded-xl border border-slate-100 bg-white"
                   >
                     <button
+                      id={`faq-question-${i}`}
+                      aria-expanded={openFaq === i}
+                      aria-controls={`faq-answer-${i}`}
                       onClick={() => setOpenFaq(openFaq === i ? null : i)}
                       className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left font-bold text-kknavy"
                     >
@@ -215,7 +223,14 @@ function AdmissionsView({
                       />
                     </button>
                     {openFaq === i && (
-                      <p className="px-4 pb-4 text-sm text-slate-600">{f.a}</p>
+                      <div
+                        id={`faq-answer-${i}`}
+                        role="region"
+                        aria-labelledby={`faq-question-${i}`}
+                        className="px-4 pb-4 text-sm text-slate-600"
+                      >
+                        {f.a}
+                      </div>
                     )}
                   </div>
                 ))}
@@ -347,16 +362,10 @@ function ContactView() {
 }
 
 export default function App() {
-  const [page, setPage] = useState<PageId>("home");
+  const [page, setPage] = useState<PageId>(() => resolvePageFromLocation());
   const [admissionsOpen, setAdmissionsOpen] = useState(false);
   const [visitOpen, setVisitOpen] = useState(false);
   const [showTop, setShowTop] = useState(false);
-  const [booting, setBooting] = useState(true);
-
-  useEffect(() => {
-    const t = setTimeout(() => setBooting(false), 1100);
-    return () => clearTimeout(t);
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 500);
@@ -364,24 +373,28 @@ export default function App() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Keep title/meta/canonical in sync with the active page (SEO + shareability).
+  useEffect(() => {
+    setPageSeo(page);
+  }, [page]);
+
+  // Support browser back/forward buttons.
+  useEffect(() => {
+    const onPopState = () => setPage(resolvePageFromLocation());
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
   const navigate = (p: PageId) => {
     setPage(p);
+    window.history.pushState({}, "", PAGE_PATHS[p]);
+    setPageSeo(p);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const openAdmissions = () => setAdmissionsOpen(true);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <AnimatePresence>
-        {booting && (
-          <FullPageLoader
-            key="boot-loader"
-            label="Preparing the learning playground..."
-            sublabel="Fetching school data and getting things ready."
-          />
-        )}
-      </AnimatePresence>
-
       <Navigation
         page={page}
         onNavigate={navigate}

@@ -1,27 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowRight,
-  Calendar,
   CheckCircle,
   Clock,
-  EnvelopeSimple,
-  MapPin,
-  Phone,
   ShieldCheck,
-  WhatsappLogo,
 } from "@/lib/icons";
 import {
   ACADEMIC_LEVELS,
   ACTIVITY_CATEGORIES,
   ACTIVITIES,
-  ADMISSION_STEPS,
-  AGE_CRITERIA,
   BRAND,
-  CONTACT,
   CORE_VALUES,
-  FAQS,
-  FEE_BANDS,
   GALLERY,
   LANGUAGES,
   NUTRITION_POINTS,
@@ -30,16 +19,15 @@ import {
   STATS,
   TESTIMONIALS,
 } from "@/data/schoolData";
+import { ACCENT } from "@/lib/accent";
 import {
-  ACCENT,
   BrandIcon,
   Cta,
   Eyebrow,
   PageHead,
   Reveal,
 } from "@/components/BrandIcon";
-import { InquiryForm, GalleryLightbox } from "@/components/Modals";
-import type { PageId } from "@/data/schoolData";
+import { GalleryLightbox } from "@/components/Modals";
 
 export function AboutView({
   onOpenAdmissions,

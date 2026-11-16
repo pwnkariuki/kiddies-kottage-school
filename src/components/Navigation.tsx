@@ -10,6 +10,7 @@ import {
 } from "@/lib/icons";
 import { BRAND, CONTACT, NAV_ITEMS } from "@/data/schoolData";
 import type { PageId } from "@/data/schoolData";
+import { PAGE_PATHS } from "@/lib/seo";
 
 function Logo() {
   return (
@@ -86,15 +87,27 @@ export default function Navigation({
         }`}
       >
         <div className="school-shell flex h-[4.5rem] items-center justify-between gap-5">
-          <button onClick={() => go("home")} aria-label="Home">
+          <a
+            href={PAGE_PATHS.home}
+            onClick={(e) => {
+              e.preventDefault();
+              go("home");
+            }}
+            aria-label="Kiddies Kottage School - Home"
+          >
             <Logo />
-          </button>
+          </a>
 
           <nav aria-label="Main navigation" className="hidden items-center gap-5 xl:flex">
             {NAV_ITEMS.map((item) => (
-              <button
+              <a
                 key={item.id}
-                onClick={() => go(item.id)}
+                href={PAGE_PATHS[item.id]}
+                onClick={(e) => {
+                  e.preventDefault();
+                  go(item.id);
+                }}
+                aria-current={page === item.id ? "page" : undefined}
                 className={`micro-link relative px-1 py-2 text-[0.82rem] font-semibold transition-colors ${
                   page === item.id
                     ? "text-kkblue"
@@ -108,7 +121,7 @@ export default function Navigation({
                     className="absolute inset-x-1 -bottom-1 h-0.5 bg-kkyellow"
                   />
                 )}
-              </button>
+              </a>
             ))}
           </nav>
 
@@ -155,9 +168,14 @@ export default function Navigation({
             >
               <div className="school-shell flex flex-col gap-1 py-4">
                 {NAV_ITEMS.map((item) => (
-                  <button
+                  <a
                     key={item.id}
-                    onClick={() => go(item.id)}
+                    href={PAGE_PATHS[item.id]}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      go(item.id);
+                    }}
+                    aria-current={page === item.id ? "page" : undefined}
                     className={`micro-link flex items-center gap-2 border-b border-slate-100 px-3 py-3 text-left text-sm font-semibold transition ${
                       page === item.id
                         ? "text-kkblue"
@@ -165,7 +183,7 @@ export default function Navigation({
                     }`}
                   >
                     {item.label}
-                  </button>
+                  </a>
                 ))}
                 <button
                   onClick={() => {

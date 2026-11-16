@@ -1,27 +1,18 @@
 # Kiddies Kottage School Website
 
-The Kiddies Kottage School website is built with React, TypeScript, Vite, Tailwind CSS, and shadcn/ui. It provides school information, admissions enquiries, campus visit requests, and a photo gallery.
+The official website for Kiddies Kottage School, a CBC school in Utawala, Nairobi. Built with React, TypeScript, Vite, Tailwind CSS 4, and shadcn/ui-style components.
 
-## 🚀 Features
+## Features
 
-- ⚡️ **Vite** - Fast build tool and development server
-- ⚛️ **React 18** - Latest React with hooks support
-- 🎯 **TypeScript** - Type safety and better developer experience
-- 🎨 **Tailwind CSS** - Utility-first CSS framework
-- 🧩 **shadcn/ui** - Beautifully designed components built with Radix UI
-- 📦 **Path Mapping** - Clean imports with `@/` prefix
+- School information pages: Home, About, Academics, Co-Curricular, Student Life
+- Admissions and fees overview with enquiry forms
+- Campus visit booking and photo gallery with lightbox
+- Client-side routing with real URLs (`/about`, `/admissions`, ...) and per-page SEO (titles, meta descriptions, canonical URLs, Open Graph tags)
+- Structured data (schema.org `School` JSON-LD) for rich search results
+- `robots.txt` and `sitemap.xml` for search engine crawling
+- Responsive, animated UI with reduced-motion support
 
-## 📦 Included shadcn/ui Components
-
-- Button
-- Card
-- Input
-- Label
-- Badge
-- Dialog
-- And more...
-
-## 🛠️ Getting Started
+## Getting Started
 
 1. **Install dependencies**
 
@@ -42,57 +33,47 @@ The Kiddies Kottage School website is built with React, TypeScript, Vite, Tailwi
    ```
 
 4. **Preview production build**
+
    ```bash
    npm run preview
    ```
 
-## 📁 Project Structure
+## Scripts
+
+| Script | Purpose |
+| --- | --- |
+| `npm run dev` | Start the dev server on port 3000 |
+| `npm run build` | Type-check and build for production |
+| `npm run typecheck` | TypeScript only (`tsc --noEmit`) |
+| `npm run lint` | ESLint across the project |
+| `npm run preview` | Serve the production build locally |
+
+## Project Structure
 
 ```
 src/
-├── components/
-│   └── ui/              # shadcn/ui components
+├── components/          # Page and UI components
+│   ├── ui/              # shadcn/ui primitives (vendored)
+│   └── animata/         # Vendored animation components
+├── data/
+│   └── schoolData.ts    # All school content and shared types
 ├── lib/
+│   ├── seo.ts           # Canonical URLs, page paths, per-page meta
+│   ├── accent.ts        # Brand accent color classes
+│   ├── inquiries.ts     # Enquiry persistence (localStorage)
+│   ├── icons.tsx        # Icon library adapter
 │   └── utils.ts         # Utility functions
-├── App.tsx              # Main application component
+├── App.tsx              # Page routing shell
 ├── index.css            # Global styles with Tailwind
-└── main.tsx             # Application entry point
+└── main.tsx             # Entry point
+public/
+├── robots.txt           # Crawler rules
+├── sitemap.xml          # Page sitemap
+└── 404.html             # GitHub Pages SPA fallback
 ```
 
-## 🎨 Customization
+## SEO Notes
 
-### Adding New shadcn/ui Components
-
-This template is pre-configured with shadcn/ui. You can add more components by creating them in the `src/components/ui/` directory.
-
-### Tailwind Configuration
-
-The Tailwind configuration is set up with shadcn/ui color variables. You can customize colors and other design tokens in:
-
-- `tailwind.config.js` - Tailwind configuration
-- `src/index.css` - CSS custom properties for themes
-
-### TypeScript Configuration
-
-Path mapping is configured for clean imports:
-
-```typescript
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-```
-
-## 🌗 Dark Mode
-
-The template includes dark mode support through Tailwind's `dark:` classes and CSS custom properties.
-
-## 📚 Learn More
-
-- [Vite Documentation](https://vitejs.dev/)
-- [React Documentation](https://react.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [Radix UI](https://www.radix-ui.com/)
-
-## 🤝 Contributing
-
-Feel free to submit issues and enhancement requests!
+- The canonical domain is defined once in `src/lib/seo.ts` (`SITE_URL`) and mirrored in `index.html`, `public/robots.txt`, and `public/sitemap.xml`.
+- Every page syncs `<title>`, meta description, canonical, and Open Graph tags on navigation.
+- If you deploy to a host without SPA fallback (e.g. GitHub Pages without the 404.html trick), deep links will 404 — hosts like Vercel/Netlify handle this automatically.

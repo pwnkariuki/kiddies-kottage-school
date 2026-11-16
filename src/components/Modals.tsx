@@ -13,25 +13,10 @@ import {
 import { ACADEMIC_LEVELS, CONTACT, GALLERY } from "@/data/schoolData";
 import type { GalleryItem, InquiryPayload } from "@/data/schoolData";
 import { ButtonLoader } from "@/components/CustomLoader";
-
-const STORE_KEY = "kk_inquiries";
+import { saveInquiry } from "@/lib/inquiries";
 
 const isPhone = (v: string) => /^\+?[0-9\s-]{9,15}$/.test(v.trim()) && v.replace(/\D/g, "").length >= 9;
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
-
-function readStore(): InquiryPayload[] {
-  try {
-    return JSON.parse(localStorage.getItem(STORE_KEY) || "[]");
-  } catch {
-    return [];
-  }
-}
-
-export function saveInquiry(payload: InquiryPayload) {
-  const all = readStore();
-  all.push(payload);
-  localStorage.setItem(STORE_KEY, JSON.stringify(all));
-}
 
 function ModalShell({
   open,

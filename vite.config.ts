@@ -36,6 +36,23 @@ export default defineConfig({
     },
   },
   build: {
-    chunkSizeWarningLimit: 5000, // Increases the limit to 5MB
+    rollupOptions: {
+      output: {
+        // Split stable vendor libraries into separate chunks for better caching.
+        manualChunks(id: string) {
+          if (!id.includes("node_modules")) return undefined;
+          if (id.includes("framer-motion")) return "vendor-motion";
+          if (id.includes("lucide-react")) return "vendor-icons";
+          if (
+            id.includes("react-dom") ||
+            id.includes("node_modules/react/") ||
+            id.includes("scheduler")
+          ) {
+            return "vendor-react";
+          }
+          return "vendor";
+        },
+      },
+    },
   },
 });

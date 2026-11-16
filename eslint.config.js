@@ -6,7 +6,13 @@ import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores(["dist", "node_modules", "src/components/ui"]),
+  globalIgnores([
+    "dist",
+    "node_modules",
+    "lovable-project",
+    "src/components/ui",
+    "src/components/animata",
+  ]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
